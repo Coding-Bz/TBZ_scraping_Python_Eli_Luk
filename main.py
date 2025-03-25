@@ -1,21 +1,14 @@
 import requests
 
-api_key = "67d940ed01f1642b7cd0d879"
-url = "https://api.scrapingdog.com/google"
+api_key = "AIzaSyC7cx7sPIY0N26osfUBkXPVtj6NAe0lbXg"
+cx = "d6b564838e4124905"
+query = "Powershell"
 
-params = {
-    "api_key": api_key,
-    "query": "Powershell",
-    "results": 10,
-    "country": "us",
-    "page": 20,
-    "advance_search": "true"
-}
+url = f"https://www.googleapis.com/customsearch/v1?q={query}&key={api_key}&cx={cx}"
 
-response = requests.get(url, params=params)
-
-if response.status_code == 200:
-    data = response.json()
-    print(data)
-else:
-    print(f"Request failed with status code: {response.status_code}")
+response = requests.get(url)
+results = response.json()
+for item in results.get("items", []):
+    print(item["title"])
+    print(item["link"])
+    print()
