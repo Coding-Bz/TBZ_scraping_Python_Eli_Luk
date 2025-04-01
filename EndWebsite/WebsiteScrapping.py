@@ -1,12 +1,12 @@
 from flask import Flask, request, render_template
 import requests
 import pandas as pd
-import os  # Für Pfad-Überprüfung
+import os  
 
 app = Flask(__name__)
 
 API_KEY = "AIzaSyC7cx7sPIY0N26osfUBkXPVtj6NAe0lbXg"  
-CX = "a1f23fb3804ca4c2c"  #
+CX = "a1f23fb3804ca4c2c"  
 
 def google_search(query):
     url = "https://www.googleapis.com/customsearch/v1"
@@ -25,11 +25,9 @@ def index():
         query = request.form.get("query")
         results = google_search(query)
 
-        # Speichere Ergebnisse als CSV
         data = [{"Titel": r["title"], "Link": r["link"], "Snippet": r.get("snippet", "")} for r in results]
         df = pd.DataFrame(data)
 
-        # Stelle sicher, dass der Ordner existiert
         save_path = r"C:\TBZ_scraping_Python_Eli_Luk\EndWebsite\google_results.csv"
         os.makedirs(os.path.dirname(save_path), exist_ok=True)  
 
